@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивная карта</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .map-container {
+            background: #fff;
+            padding: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            /* Размеры контейнера подгоняем под размеры скрипта */
+            width: 970px;
+            height: 720px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Наша интерактивная карта</h1>
+
+    <div class="map-container">
+        <!-- Скрипт Яндекс Карт автоматически создаст iframe внутри этого блока -->
+        <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Af6fb87b135e7ba29430000d6b61e84769aafa88e496588fd0586c90691951b3a&amp;width=970&amp;height=720&amp;lang=ru_RU&amp;scroll=true"></script>
+    </div>
+
+</body>
+</html>
