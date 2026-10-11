@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Интерактивная карта</title>
+    <title>Исторические и современные карты</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,28 +19,125 @@
         }
         h1 {
             color: #333;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
-        .map-container {
+        
+        /* Стили для контейнера выбора карты */
+        .select-container {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #444;
+        }
+        .map-select {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #333;
+            cursor: pointer;
+            outline: none;
+            font-weight: bold;
+        }
+        .map-select:focus {
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        /* Общий контейнер для карт */
+        .map-wrapper {
             background: #fff;
             padding: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
-            /* Размеры контейнера подгоняем под размеры скрипта */
             width: 970px;
             height: 720px;
+            position: relative;
+        }
+
+        /* Контейнеры контента */
+        .map-content {
+            display: none; /* По умолчанию скрываем все */
+            width: 100%;
+            height: 100%;
             overflow: hidden;
+        }
+        .map-content.active {
+            display: block; /* Показываем только выбранный блок */
+        }
+
+        /* Стили для статичных картинок */
+        .old-map-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Картинка впишется без искажений */
+            background-color: #eaeaea; 
         }
     </style>
 </head>
 <body>
 
-    <h1>Наша интерактивная карта</h1>
+    <h1>Просмотр карт разных эпох</h1>
 
-    <div class="map-container">
-        <!-- Скрипт Яндекс Карт автоматически создаст iframe внутри этого блока -->
-        <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Af6fb87b135e7ba29430000d6b61e84769aafa88e496588fd0586c90691951b3a&amp;width=970&amp;height=720&amp;lang=ru_RU&amp;scroll=true"></script>
+    <!-- Выпадающий список для выбора нужной карты -->
+    <div class="select-container">
+        <label for="map-selector">Выберите карту:</label>
+        <select id="map-selector" class="map-select" onchange="changeMap(this.value)">
+            <option value="interactive">Современная (Интерактивная Яндекс Карта)</option>
+            <option value="map-18">Карта XVIII века (18 век)</option>
+            <option value="map-19-early">Карта XIX века (Первая половина)</option>
+            <option value="map-19-late">Карта XIX века (Вторая половина)</option>
+        </select>
     </div>
+
+    <!-- Контейнер для отображения -->
+    <div class="map-wrapper">
+        
+        <!-- Блок: Интерактивная современная карта -->
+        <div id="interactive" class="map-content active">
+            <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Af6fb87b135e7ba29430000d6b61e84769aafa88e496588fd0586c90691951b3a&amp;width=970&amp;height=720&amp;lang=ru_RU&amp;scroll=true"></script>
+        </div>
+
+        <!-- Блок: Карта 18 века -->
+        <div id="map-18" class="map-content">
+            <!-- Укажите путь к файлу карты 18 века вместо 'map_18_century.jpg' -->
+            <img src="map_18_century.jpg" alt="Карта 18 века" class="old-map-img">
+        </div>
+
+        <!-- Блок: Карта 19 века (вариант 1) -->
+        <div id="map-19-early" class="map-content">
+            <!-- Укажите путь к файлу первой карты 19 века вместо 'map_19_early.jpg' -->
+            <img src="map_19_early.jpg" alt="Карта 19 века (начало)" class="old-map-img">
+        </div>
+
+        <!-- Блок: Карта 19 века (вариант 2) -->
+        <div id="map-19-late" class="map-content">
+            <!-- Укажите путь к файлу второй карты 19 века вместо 'map_19_late.jpg' -->
+            <img src="map_19_late.jpg" alt="Карта 19 века (конец)" class="old-map-img">
+        </div>
+
+    </div>
+
+    <!-- Скрипт логики переключения -->
+    <script>
+        function changeMap(selectedId) {
+            // Скрываем все блоки с картами
+            document.querySelectorAll('.map-content').forEach(block => {
+                block.classList.remove('active');
+            });
+            
+            // Показываем только тот блок, ID которого совпадает с выбранным значением в select
+            const activeBlock = document.getElementById(selectedId);
+            if (activeBlock) {
+                activeBlock.classList.add('active');
+            }
+        }
+    </script>
 
 </body>
 </html>
